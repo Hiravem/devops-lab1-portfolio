@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Lab 1 — Portfolio cá nhân & CI/CD Pipeline</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --bg-gradient: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --success: #10b981;
+            --success-bg: #ecfdf5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            color: var(--text-main);
+        }
+
+        .container {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 48px;
+            max-width: 680px;
+            width: 100%;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header-icon {
+            font-size: 54px;
+            margin-bottom: 12px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        h1 {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: 800;
+        }
+
+        h2 {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-size: 17px;
+            font-weight: 500;
+        }
+
+        .info-card {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 24px;
+            margin: 20px 0;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .info-row:first-child {
+            padding-top: 0;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-value {
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--success-bg);
+            color: var(--success);
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 13px;
+            border: 1px solid #a7f3d0;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--success);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--success);
+        }
+
+        .skills-section {
+            margin: 24px 0 16px 0;
+        }
+
+        .section-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .badge {
+            background: #eef2ff;
+            color: #4338ca;
+            padding: 7px 16px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #c7d2fe;
+            transition: all 0.2s ease;
+        }
+
+        .badge:hover {
+            transform: translateY(-2px);
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .workflow-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #1e293b;
+            font-weight: 600;
+            border: 1px solid #bae6fd;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .workflow-step {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .workflow-arrow {
+            color: #0284c7;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 28px;
+            font-size: 12px;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 24px; }
+            h1 { font-size: 24px; }
+            .workflow-box { flex-direction: column; gap: 8px; }
+            .workflow-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-icon">🚀</div>
+        <h1>DevOps Lab 1 — Portfolio</h1>
+        <h2>Trải nghiệm toàn bộ vòng đời CI/CD Pipeline tự động</h2>
+
+        <div class="info-card">
+            <div class="info-row">
+                <span class="info-label">👤 Sinh viên:</span>
+                <span class="info-value" id="student-name">Nguyễn Minh Hải (DTC235180061)</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">🏫 Lớp:</span>
+                <span class="info-value">KTPM K22B — ICTU</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">🎯 Môn học:</span>
+                <span class="info-value">Vận hành & Bảo trì Phần mềm (DevOps 2026)</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">⚡ Triển khai bằng:</span>
+                <span class="info-value">GitHub Actions CI/CD Pipeline</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">📅 Ngày deploy:</span>
+                <span class="info-value" id="date">Đang cập nhật...</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">🔄 Trạng thái:</span>
+                <span class="status-pill">
+                    <span class="status-dot"></span>
+                    Automated & Live
+                </span>
+            </div>
+        </div>
+
+        <div class="skills-section">
+            <div class="section-title">DevOps Technologies & Skills</div>
+            <div class="badges">
+                <span class="badge">🌐 HTML5 / CSS3</span>
+                <span class="badge">🌿 Git & GitHub</span>
+                <span class="badge">⚙️ GitHub Actions</span>
+                <span class="badge">🚀 CI/CD Pipeline</span>
+                <span class="badge">📄 GitHub Pages</span>
+                <span class="badge">🔄 DevOps Lifecycle</span>
+            </div>
+        </div>
+
+        <div class="workflow-box">
+            <div class="workflow-step">💻 Plan & Code</div>
+            <span class="workflow-arrow">➔</span>
+            <div class="workflow-step">🧪 CI Test & Validate</div>
+            <span class="workflow-arrow">➔</span>
+            <div class="workflow-step">🚀 Auto Deploy</div>
+            <span class="workflow-arrow">➔</span>
+            <div class="workflow-step">📡 Live Online</div>
+        </div>
+
+        <div class="footer">
+            <p>Trang web được tự động xác thực và deploy mỗi khi push code lên nhánh <code>main</code>.</p>
+            <p>DevOps Automation: Tiết kiệm thời gian, loại bỏ sai sót thủ công, đảm bảo tính nhất quán 100%.</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('date').textContent = new Date().toLocaleDateString('vi-VN', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    </script>
+</body>
+</html>

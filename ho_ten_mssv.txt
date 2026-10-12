@@ -1,0 +1,14 @@
+============================================================
+THÔNG TIN NỘP BÀI THỰC HÀNH LAB 1
+Môn học: Vận hành & Bảo trì Phần mềm (DevOps 2026)
+============================================================
+
+Họ và tên: Nguyễn Minh Hải
+Mã số sinh viên (MSSV): DTC235180061
+Lớp: KTPM K22B
+Email: dtc235180061@ictu.edu.vn
+Trường: Đại học Công nghệ Thông tin và Truyền thông - ĐH Thái Nguyên (ICTU)
+Tên Repository: devops-lab1-portfolio
+GitHub Repository URL: https://github.com/Hiravem/devops-lab1-portfolio
+GitHub Pages URL: https://Hiravem.github.io/devops-lab1-portfolio/
+Thời gian hoàn thành: 12/10/2026
