@@ -1,0 +1,52 @@
+# ============================================================
+# DevOps Lab 1 — CI/CD Pipeline với GitHub Actions
+# Tự động validate và deploy website lên GitHub Pages
+# ============================================================
+
+name: 🚀 Deploy to GitHub Pages
+
+# === Kích hoạt khi nào? ===
+on:
+  push:
+    branches: [main]       # Tự động chạy mỗi khi push code lên nhánh main
+  workflow_dispatch:        # Cho phép bấm nút chạy thủ công từ GitHub Actions UI
+
+# Cấp quyền ghi nội dung cho GITHUB_TOKEN để push lên nhánh gh-pages
+permissions:
+  contents: write
+
+# === Các job thực thi ===
+jobs:
+  build-and-deploy:
+    name: Build, Validate & Deploy
+    runs-on: ubuntu-latest   # Chạy trên máy ảo Ubuntu do GitHub cung cấp miễn phí
+
+    steps:
+      # Step 1: Checkout mã nguồn từ repository
+      - name: 📦 Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Kiểm tra tính hợp lệ cơ bản của file HTML (CI step)
+      - name: 🧪 Validate HTML
+        run: |
+          echo "================================================"
+          echo "🔍 Đang kiểm tra cấu trúc mã nguồn web..."
+          echo "================================================"
+          if [ -f "index.html" ]; then
+            echo "✅ index.html tồn tại hợp lệ!"
+            FILE_SIZE=$(wc -c < index.html)
+            LINE_COUNT=$(wc -l < index.html)
+            echo "📊 Kích thước file: ${FILE_SIZE} bytes (${LINE_COUNT} dòng)"
+          else
+            echo "❌ LỖI: Không tìm thấy file index.html tại thư mục gốc!"
+            exit 1
+          fi
+
+      # Step 3: Tự động deploy lên GitHub Pages (CD step)
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          publish_branch: gh-pages
+          commit_message: "🚀 Auto-deploy website via GitHub Actions CI/CD Pipeline [skip ci]"
