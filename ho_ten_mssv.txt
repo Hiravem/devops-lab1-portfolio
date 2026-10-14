@@ -4,7 +4,7 @@ Môn học: Vận hành & Bảo trì Phần mềm (DevOps 2026)
 ============================================================
 
 Họ và tên: Nguyễn Minh Hải
-Mã số sinh viên (MSSV): DTC235180000
+Mã số sinh viên (MSSV): DTC235180061
 Lớp: KTPM K22B
 Email: dtc235180061@ictu.edu.vn
 Trường: Đại học Công nghệ Thông tin và Truyền thông - ĐH Thái Nguyên (ICTU)
